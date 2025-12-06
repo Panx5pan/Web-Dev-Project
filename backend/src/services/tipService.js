@@ -1,3 +1,4 @@
+import { read } from "node:fs";
 import { readDb, writeDb } from "../../database/database.js";
 import crypto from "node:crypto";
 
@@ -6,6 +7,7 @@ export default {
     // TODO: get ahold of the db using readDb();
     // TODO: return the tips from the db
     const db = await readDb()
+
     return db.tips
   },
 
@@ -25,7 +27,7 @@ export default {
 
     db.tips.push(tip)
 
-    writeDb(db)
+    await writeDb(db)
 
     return tip.id
   },
@@ -37,6 +39,19 @@ export default {
     // TODO: otherwise, set the found tip's title to the incoming title
     // TODO: write changes to database with await writeDb(db)
     // TODO: return true
+    const db = await readDb()
+
+    const tip = db.tips.find(t => t.id === id && t.userId === userId)
+
+    if (!tip){
+      return false
+    }
+
+    tip.title = title
+
+    await writeDb(db)
+
+    return true
   },
 
   async remove({ id, userId }) {
@@ -46,5 +61,17 @@ export default {
     // TODO: otherwise, use splice to delete from db.tips the tip based on the index
     // TODO: write changes to database with await writeDb(db)
     // TODO: return true
+    const db = await readDb()
+
+    const index = db.tips.findIndex(t => t.id === id && t.userId === userId)
+
+    if(index === -1){
+      return false
+    }
+    db.tips.splice(index, 1)
+
+    await writeDb(db)
+
+    return true
   },
 };

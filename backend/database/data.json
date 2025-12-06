@@ -1,4 +1,17 @@
 {
-  "users": [],
+  "users": [
+    {
+      "id": "b9690eb4-187c-41de-80c5-fedc9c85e43b",
+      "username": "mario",
+      "password": "tan",
+      "profilePicture": ""
+    },
+    {
+      "id": "959c9cd7-9b25-4125-b198-32677d099e4d",
+      "username": "sam",
+      "password": "tiong",
+      "profilePicture": ""
+    }
+  ],
   "tips": []
 }
